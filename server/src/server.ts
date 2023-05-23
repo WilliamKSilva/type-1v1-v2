@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import bodyParser from "body-parser";
 import { setupDB } from "./database/setup";
 import { NewGameFactory } from "./factories";
+import { setupTables } from "./database/tables";
 
 // HTTP Server
 const app = express();
@@ -12,11 +13,11 @@ const jsonParser = bodyParser.json();
 app.use(jsonParser);
 
 // DB
-const client = setupDB();
+const pool = setupDB();
 
 (async () => {
   try {
-    await client.connect();
+    await setupTables(pool);
 
     console.log("Postgres connected!");
   } catch (error) {

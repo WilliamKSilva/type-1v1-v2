@@ -1,12 +1,12 @@
-import { Client } from "pg";
+import { Client, Pool } from "pg";
 
 export function setupDB() {
-  const client = new Client({
+  const pool = new Pool({
     host: "localhost",
     user: "postgres",
     password: "postgres",
     database: "dev",
   });
 
-  return client;
+  return pool;
 }
