@@ -14,5 +14,7 @@ export class GameService implements IGameService {
     player_two,
   }: Game): Promise<Game | null> {
     const uuid = uuidv4();
+
+    return null;
   }
 }
