@@ -17,7 +17,7 @@ const pool = setupDB();
 
 (async () => {
   try {
-    await setupTables(pool);
+    await pool.connect();
 
     console.log("Postgres connected!");
   } catch (error) {
