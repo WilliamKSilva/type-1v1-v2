@@ -1,9 +1,15 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
+import bodyParser from "body-parser";
 import { setupDB } from "./database/setup";
+import { NewGameFactory } from "./factories";
 
 // HTTP Server
 const app = express();
 app.listen(3001);
+
+const jsonParser = bodyParser.json();
+
+app.use(jsonParser);
 
 // DB
 const client = setupDB();
@@ -18,10 +24,16 @@ const client = setupDB();
   }
 })();
 
-app.get("/health", (request, response) => {
+app.get("/health", async (request: Request, response: Response) => {
   response
     .json({
       message: "Ta la!",
     })
     .send(200);
+});
+
+app.post("/games", async (request: Request, response: Response) => {
+  const gameController = NewGameFactory();
+
+  await gameController.newGame(request, response);
 });

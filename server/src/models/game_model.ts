@@ -1,8 +1,8 @@
 export class Game {
   uuid: string = "";
   name: string = "";
-  player_one: string = "";
-  player_two: string = "";
+  player_one: string | null = "";
+  player_two: string | null = "";
   created_at: Date = new Date();
   updated_at: Date = new Date();
 
