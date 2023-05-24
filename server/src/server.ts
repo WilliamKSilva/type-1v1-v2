@@ -1,16 +1,30 @@
 import express, { NextFunction, Request, Response } from "express";
+import { createServer } from "http";
 import bodyParser from "body-parser";
 import { setupDB } from "./database/setup";
 import { NewGameFactory } from "./factories";
 import { PoolClient } from "pg";
+import { Server } from "socket.io";
+
+// Pensar na logica de start do jogo
+// Um usuario se conecta primeiro, cria o jogo,
+// pega o uuid do jogo e envia pra um segundo usuario
+// os dois se conectam no mesmo jogo
+// o client 1 manda pro servidor o estado atual do texto digitado,
+// uuid do jogo e nome do player, o servidor recebe e envia pro client 2
 
 // HTTP Server
 const app = express();
-app.listen(3001);
 
 const jsonParser = bodyParser.json();
 
 app.use(jsonParser);
+
+// Websocket
+const httpServer = createServer(app);
+const io = new Server(httpServer, {});
+
+httpServer.listen(3001);
 
 // DB
 const pool = setupDB();
