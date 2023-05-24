@@ -13,6 +13,13 @@ export class GameService implements IGameService {
   public async newGame(gameData: NewGameData): Promise<Game | null> {
     const uuid = uuidv4();
 
-    return null;
+    const game = {
+      uuid,
+      ...gameData,
+    };
+
+    const createdGame = this.gameRepository.newGame(game);
+
+    return createdGame;
   }
 }

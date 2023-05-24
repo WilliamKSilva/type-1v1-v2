@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import bodyParser from "body-parser";
 import { setupDB } from "./database/setup";
 import { NewGameFactory } from "./factories";
-import { setupTables } from "./database/tables";
+import { PoolClient } from "pg";
 
 // HTTP Server
 const app = express();
@@ -15,9 +15,11 @@ app.use(jsonParser);
 // DB
 const pool = setupDB();
 
+let poolClient: PoolClient;
+
 (async () => {
   try {
-    await pool.connect();
+    poolClient = await pool.connect();
 
     console.log("Postgres connected!");
   } catch (error) {
@@ -34,7 +36,7 @@ app.get("/health", async (request: Request, response: Response) => {
 });
 
 app.post("/games", async (request: Request, response: Response) => {
-  const gameController = NewGameFactory();
+  const gameController = NewGameFactory(poolClient);
 
   await gameController.newGame(request, response);
 });

@@ -12,7 +12,6 @@ export class GameController {
 
   public async newGame(request: Request, response: Response) {
     try {
-      console.log(request.body);
       const payload = request.body as NewGameData;
 
       const game = await this.gameService.newGame(payload);
