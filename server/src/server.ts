@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { createServer } from "http";
 import bodyParser from "body-parser";
 import { setupDB } from "./database/setup";
-import { NewGameFactory } from "./factories";
+import { NewGameFactory, NewGameWebSocketFactory } from "./factories";
 import { PoolClient } from "pg";
 import { Server } from "socket.io";
 
@@ -40,6 +40,10 @@ let poolClient: PoolClient;
     console.error(error);
   }
 })();
+
+// WebSocket current game state handler
+const gameWebSocketService = NewGameWebSocketFactory(io);
+gameWebSocketService.textStateShare();
 
 app.get("/health", async (request: Request, response: Response) => {
   response
