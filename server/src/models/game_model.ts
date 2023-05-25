@@ -22,3 +22,8 @@ export class Game {
     this.updated_at = updated_at;
   }
 }
+
+export type GameStateData = {
+  gameUuid: string;
+  textState: string;
+};
