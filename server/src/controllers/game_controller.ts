@@ -9,6 +9,12 @@ export type NewGameData = {
   player_one_name: string | undefined;
 };
 
+export type UpdateGameData = {
+  player_two_uuid: string | undefined;
+  player_two_name: string | undefined;
+  game_id: string;
+}
+
 export class GameController {
   constructor(private gameService: IGameService) { }
 
@@ -19,10 +25,10 @@ export class GameController {
       const game = await this.gameService.newGame(payload);
 
       response
-        .status(200)
         .json({
           data: game,
         })
+        .status(200)
         .send();
     } catch (error) {
       console.log(error);
@@ -33,5 +39,9 @@ export class GameController {
         })
         .send();
     }
+  }
+
+  public async updateGame(request: Request, response: Response) {
+    const payload = request.body as UpdateGameData;
   }
 }

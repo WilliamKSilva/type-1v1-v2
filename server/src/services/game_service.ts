@@ -1,4 +1,4 @@
-import { NewGameData } from "../controllers/game_controller";
+import { NewGameData, UpdateGameData } from "../controllers/game_controller";
 import { Game, GameType } from "../models/game_model";
 import { v4 as uuidv4 } from "uuid";
 import { GameRepository } from "../repositories/game_repository";
@@ -53,5 +53,17 @@ export class GameService implements IGameService {
     })
 
     return gameRegular;
+  }
+
+  public async updateGame(data: UpdateGameData): Promise<GameFast | GameRegular | null> {
+    const game = await this.gameRepository.findGameById(data.game_id);
+
+    if (game?.type === GameType.fast) {
+      const updatedGame = await this.gameRepository.updateGameFast({ player_two_name: data.player_two_name, game_uuid: data.game_id })
+      return updatedGame;
+    }
+
+    const updatedGame = await this.gameRepository.updateGameRegular({ player_two_uuid: data.player_two_uuid, game_uuid: data.game_id });
+    return updatedGame;
   }
 }
