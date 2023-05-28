@@ -66,4 +66,6 @@ export class GameService implements IGameService {
     const updatedGame = await this.gameRepository.updateGameRegular({ player_two_uuid: data.player_two_uuid, game_uuid: data.game_id });
     return updatedGame;
   }
+
+  // Criar logica para as metricas relacionadas aos jogos
 }
