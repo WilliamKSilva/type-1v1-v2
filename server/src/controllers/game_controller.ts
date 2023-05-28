@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { IGameService } from "../services/game_service";
+import { GameType } from "../models/game_model";
 
 export type NewGameData = {
   name: string;
-  player_one: string | null;
-  player_two: string | null;
+  type: GameType;
+  player_one_uuid: string | undefined;
+  player_one_name: string | undefined;
 };
 
 export class GameController {
-  constructor(private gameService: IGameService) {}
+  constructor(private gameService: IGameService) { }
 
   public async newGame(request: Request, response: Response) {
     try {
@@ -23,6 +25,7 @@ export class GameController {
         })
         .send();
     } catch (error) {
+      console.log(error);
       response
         .status(400)
         .json({
