@@ -1,6 +1,6 @@
 export enum GameType {
-  regular = 'Regular',
-  fast = 'Fast'
+  regular = "Regular",
+  fast = "Fast",
 }
 
 export class Game {
@@ -28,4 +28,8 @@ export class Game {
 export type GameStateData = {
   gameUuid: string;
   textState: string;
+};
+
+export type EnterGameData = {
+  gameUuid: string;
 };
