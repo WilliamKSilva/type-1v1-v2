@@ -2,10 +2,15 @@ import express, { NextFunction, Request, Response } from "express";
 import { createServer } from "http";
 import bodyParser from "body-parser";
 import { setupDB } from "./database/setup";
-import { NewGameFactory, NewGameWebSocketFactory } from "./factories";
+import {
+  NewGameFactory,
+  NewGameWebSocketFactory,
+  NewUserFactory,
+} from "./factories";
 import { PoolClient } from "pg";
 import { Server } from "socket.io";
 import { GameStateData } from "./models/game_model";
+import { UserController } from "./controllers/user_controller";
 
 // Pensar na logica de start do jogo
 // Um usuario se conecta primeiro, cria o jogo,
@@ -60,4 +65,10 @@ app.post("/games", async (request: Request, response: Response) => {
   const gameController = NewGameFactory(poolClient);
 
   await gameController.newGame(request, response);
+});
+
+app.post("/users", async (request: Request, response: Response) => {
+  const userController = NewUserFactory(poolClient);
+
+  userController.newUser(request, response);
 });
