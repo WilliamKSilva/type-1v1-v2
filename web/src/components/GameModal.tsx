@@ -23,7 +23,7 @@ export const GameModal = ({ active, setActive, gameTitle }: ModalProps) => {
                     <h3>{gameTypeText}</h3>
                     <div className="option">
                         <button>Entrar em um jogo</button>
-                        <button>Criar um novo jogo</button>
+                        <button className="button-important">Criar um novo jogo</button>
                     </div>
                 </div>
             </div>
