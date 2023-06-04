@@ -5,7 +5,7 @@ export const Header = () => {
         <header>
             <div className="header-content">
                 <strong>Type-1v1</strong>
-                <button>teste</button>
+                <button>Login</button>
             </div>
         </header>
     )

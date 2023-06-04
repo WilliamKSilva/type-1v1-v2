@@ -25,3 +25,19 @@
     text-align: center;
     width: 55%;
 }
+
+.game-options {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 5rem;
+    flex-direction: row;
+
+    button {
+        padding: 0.7rem;
+        width: 140px;
+        font-weight: 600;
+    }
+}
