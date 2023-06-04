@@ -1,10 +1,22 @@
+import { useState } from "react"
 import { Header } from "../components/Header"
 import './Home.scss'
-
+import { GameModal } from "../components/GameModal"
 
 // TODO, add SVG with typing animation
 
 export const Home = () => {
+    const [modalActive, setModalActive] = useState(false)
+    const [gameType, setGameType] = useState('')
+
+    const changeModalActive = (gameType?: string) => {
+        if (gameType) {
+            setGameType(gameType)
+        }
+
+        setModalActive(!modalActive)
+    }
+
     return (
         <div>
             <Header />
@@ -19,15 +31,16 @@ export const Home = () => {
                         que a partida seja simples e direta ao ponto!
                     </p>
                     <div className="game-options">
-                        <button>
+                        <button onClick={() => changeModalActive('fast')}>
                             Rapido
                         </button>
-                        <button>
+                        <button onClick={() => changeModalActive('regular')}>
                             Normal
                         </button>
                     </div>
                 </section>
             </div>
+            <GameModal gameTitle={gameType} active={modalActive} setActive={changeModalActive} />
         </div>
     )
 }
