@@ -61,7 +61,7 @@ app.get("/health", async (request: Request, response: Response) => {
     .send(200);
 });
 
-app.post("/games", async (request: Request, response: Response) => {
+app.post("/games/:id", async (request: Request, response: Response) => {
   const gameController = NewGameFactory(poolClient);
 
   await gameController.newGame(request, response);

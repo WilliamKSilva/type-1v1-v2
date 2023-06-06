@@ -12,11 +12,11 @@ export type NewGameData = {
 export type UpdateGameData = {
   player_two_uuid: string | undefined;
   player_two_name: string | undefined;
-  game_id: string;
-}
+  game_uid: string;
+};
 
 export class GameController {
-  constructor(private gameService: IGameService) { }
+  constructor(private gameService: IGameService) {}
 
   public async newGame(request: Request, response: Response) {
     try {
@@ -42,6 +42,30 @@ export class GameController {
   }
 
   public async updateGame(request: Request, response: Response) {
-    const payload = request.body as UpdateGameData;
+    try {
+      const gameId = request.params.id;
+      const payload = request.body as UpdateGameData;
+
+      const data = {
+        gameId,
+        ...payload,
+      };
+
+      const game = await this.gameService.updateGame(data);
+
+      response
+        .status(200)
+        .json({
+          data: game,
+        })
+        .send();
+    } catch (error) {
+      response
+        .status(500)
+        .json({
+          message: "Internal Server Error",
+        })
+        .send();
+    }
   }
 }
