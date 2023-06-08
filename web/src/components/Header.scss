@@ -1,22 +1,22 @@
 header {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-content {
-    width: 70%;
-    display: flex;
-    padding: 1.1rem;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+  width: 70%;
+  display: flex;
+  padding: 1.1rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-    button {
-        width: 120px;
-        padding: 0.4rem;
-        background-color: #FFB84C;
-        color: #000000;
-    }
+  button {
+    width: 120px;
+    padding: 0.4rem;
+    background-color: #ffb84c;
+    color: #000000;
+  }
 }
