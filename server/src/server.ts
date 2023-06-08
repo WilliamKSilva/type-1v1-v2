@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
+import cors from "cors";
 import { createServer } from "http";
 import bodyParser from "body-parser";
 import { setupDB } from "./database/setup";
@@ -9,8 +10,6 @@ import {
 } from "./factories";
 import { PoolClient } from "pg";
 import { Server } from "socket.io";
-import { GameStateData } from "./models/game_model";
-import { UserController } from "./controllers/user_controller";
 
 // Pensar na logica de start do jogo
 // Um usuario se conecta primeiro, cria o jogo,
@@ -24,6 +23,7 @@ const app = express();
 
 const jsonParser = bodyParser.json();
 
+app.use(cors());
 app.use(jsonParser);
 
 // Websocket
@@ -61,7 +61,7 @@ app.get("/health", async (request: Request, response: Response) => {
     .send(200);
 });
 
-app.post("/games/:id", async (request: Request, response: Response) => {
+app.post("/games", async (request: Request, response: Response) => {
   const gameController = NewGameFactory(poolClient);
 
   await gameController.newGame(request, response);
