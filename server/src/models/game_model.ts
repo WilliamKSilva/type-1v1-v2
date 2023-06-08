@@ -25,11 +25,8 @@ export class Game {
   }
 }
 
-export type GameStateData = {
-  gameUuid: string;
+// TODO, update this to match the two types of game, fast and regular
+export type PlayerStateData = {
+  name: string;
   textState: string;
-};
-
-export type EnterGameData = {
-  gameUuid: string;
 };

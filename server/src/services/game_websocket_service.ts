@@ -1,17 +1,30 @@
 import { Server } from "socket.io";
-import { EnterGameData, GameStateData } from "../models/game_model";
+import { PlayerStateData } from "../models/game_model";
 
 export class GameWebSocketService {
   constructor(private io: Server) {}
 
+  private gameUuid: string = "";
+
+  private gameState: PlayerStateData = {
+    name: "",
+    textState: "",
+  };
+
   public async textStateShare(): Promise<void> {
     this.io.on("connection", (socket) => {
-      socket.on("join_game", (data: EnterGameData) => {
-        socket.join(data.gameUuid);
-      });
+      const query = socket.handshake.query;
 
-      socket.on("state_game", (data: GameStateData) => {
-        socket.to(data.gameUuid).emit("state", data);
+      const gameUuid = query.gameUuid as string;
+
+      this.gameUuid = gameUuid;
+
+      socket.join(this.gameUuid);
+
+      socket.on("player_state", (data: PlayerStateData) => {
+        this.gameState = data;
+
+        socket.to(this.gameUuid).emit("player_opponent_state", this.gameState);
       });
     });
   }
