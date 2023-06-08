@@ -1,6 +1,6 @@
 export enum GameType {
-  regular = "Regular",
-  fast = "Fast",
+  regular = "regular",
+  fast = "fast",
 }
 
 export class Game {

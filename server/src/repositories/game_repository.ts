@@ -9,7 +9,7 @@ export interface IGameRepository {
 }
 
 export class GameRepository implements IGameRepository {
-  constructor(private dbClient: PoolClient) { }
+  constructor(private dbClient: PoolClient) {}
 
   public async newGame({
     name,
@@ -41,7 +41,7 @@ export class GameRepository implements IGameRepository {
   public async newGameFast({
     uuid,
     player_one_name,
-    game_uuid
+    game_uuid,
   }: Partial<GameFast>): Promise<GameFast | null> {
     const insertQuery = `INSERT INTO game_fast (uuid, player_one_name, game_id) VALUES ($1, $2, $3)`;
     const data = [uuid, player_one_name, game_uuid];
@@ -67,7 +67,7 @@ export class GameRepository implements IGameRepository {
   public async newGameRegular({
     uuid,
     player_one_uuid,
-    game_uuid
+    game_uuid,
   }: Partial<GameRegular>): Promise<GameRegular | null> {
     const insertQuery = `INSERT INTO game_regular (uuid, player_one_uuid, game_id) VALUES ($1, $2, $3)`;
     const data = [uuid, player_one_uuid, game_uuid];
@@ -92,7 +92,7 @@ export class GameRepository implements IGameRepository {
 
   public async updateGameFast({
     player_two_name,
-    game_uuid
+    game_uuid,
   }: Partial<GameFast>): Promise<GameFast | null> {
     const insertQuery = `INSERT INTO game_fast (player_two_name) VALUES ($1) WHERE game_id = $2`;
     const data = [player_two_name, game_uuid];
@@ -117,7 +117,7 @@ export class GameRepository implements IGameRepository {
 
   public async updateGameRegular({
     player_two_uuid,
-    game_uuid
+    game_uuid,
   }: Partial<GameRegular>): Promise<GameRegular | null> {
     const insertQuery = `INSERT INTO game_regular (player_two_uuid) VALUES ($1) WHERE game_id = $2`;
     const data = [player_two_uuid, game_uuid];
