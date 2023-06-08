@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Header } from "../components/Header";
+import { Header } from "../../components/Header";
 import "./Home.scss";
-import { GameModal } from "../components/GameModal";
+import { GameModal } from "../../components/GameModal";
 
 // TODO, add SVG with typing animation
 
-export const Home = () => {
+export default function Home() {
   const [modalActive, setModalActive] = useState(false);
   const [gameType, setGameType] = useState("");
 
@@ -43,4 +43,4 @@ export const Home = () => {
       />
     </div>
   );
-};
+}
