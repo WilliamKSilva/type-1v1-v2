@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Home from "./GameRoom/Home";
+import Home from "./Home/Home";
 import GameRoom from "./GameRoom/GameRoom";
 
 export const router = createBrowserRouter([

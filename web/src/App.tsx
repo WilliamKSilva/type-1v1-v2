@@ -1,4 +1,4 @@
-import Home from "./pages/GameRoom/Home";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
