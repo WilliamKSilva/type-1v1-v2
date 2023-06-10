@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 import "./GameRoom.scss";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -11,33 +11,42 @@ type PlayerStateData = {
 export default function GameRoom() {
   const { gameUuid, playerName } = useParams();
 
-  const [player, setPlayer] = useState<PlayerStateData>();
-  const [playerOpponent, setPlayerOpponent] = useState<PlayerStateData>();
-
-  const socket = io("http://localhost:3001", {
-    query: {
-      gameUuid,
-    },
+  const [player, setPlayer] = useState<PlayerStateData>({
+    name: playerName,
+    textState: "",
+  });
+  const [playerOpponent, setPlayerOpponent] = useState<PlayerStateData>({
+    name: "",
+    textState: "",
   });
 
-  socket.emit("player_state", {
+  // socket.on("player_opponent_state", (data: PlayerStateData) => {
+  //   setPlayerOpponent({
+  //     name: data.name,
+  //     textState: data.textState,
+  //   });
+  // });
+
+  let socketConnected = false;
+
+  let socket: Socket | null = null;
+
+  if (!socketConnected) {
+    socket = io("http://localhost:3001", {
+      query: {
+        gameUuid,
+      },
+    });
+  }
+
+  socket?.on("connect", () => {
+    socketConnected = true;
+  });
+
+  socket?.emit("player_state", {
     player: player?.name,
     textState: player?.textState,
   });
-
-  socket.on("player_opponent_state", (data: PlayerStateData) => {
-    setPlayerOpponent({
-      name: data.name,
-      textState: data.textState,
-    });
-  });
-
-  useEffect(() => {
-    setPlayer({
-      name: playerName,
-      textState: "",
-    });
-  }, [playerName]);
 
   return (
     <div className="content">

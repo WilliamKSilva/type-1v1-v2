@@ -2,6 +2,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import "./GameModal.scss";
 import { useState } from "react";
 import { GameType } from "../utils/enums/GameType";
+import { useNavigate } from "react-router-dom";
+import { Loading } from "./Loading";
 
 type ModalProps = {
   active: boolean;
@@ -21,11 +23,14 @@ type GameData = {
 };
 
 export const GameModal = ({ active, setActive, gameType }: ModalProps) => {
+  const navigate = useNavigate();
+
   const [gameData, setGameData] = useState<GameData>({
     name: "",
     playerName: "",
   });
   const [option, setOption] = useState<GameOption>(GameOption.notSelected);
+  const [loading, setLoading] = useState<boolean>(false);
   const gameTitle = gameType === "fast" ? "Jogo Rapido" : "Jogo Regular";
 
   const closeModal = () => {
@@ -114,34 +119,47 @@ export const GameModal = ({ active, setActive, gameType }: ModalProps) => {
         type: gameType,
       };
 
-      const response = await fetch(
-        `${import.meta.env.VITE_TYPE_1V1_API_URL}/games`,
-        {
-          method: "post",
-          body: JSON.stringify(gamePayload),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
+      setLoading(true);
 
-      const createdGame = await response.json();
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_TYPE_1V1_API_URL}/games`,
+          {
+            method: "post",
+            body: JSON.stringify(gamePayload),
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
 
-      console.log(createdGame);
+        const createdGame = await response.json();
+
+        setLoading(false);
+        navigate(`/game-room/${createdGame.uuid}`, {
+          state: { playerName: gamePayload.player_one_name },
+        });
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     }
   };
 
   return active ? (
-    <div className="modal-container">
-      <div className="modal">
-        <div className="modal-header">
-          <button className="close-button" onClick={() => closeModal()}>
-            <AiOutlineClose color="white" size={25} />
-          </button>
+    <>
+      <div className="modal-container">
+        <div className="modal">
+          <div className="modal-header">
+            <button className="close-button" onClick={() => closeModal()}>
+              <AiOutlineClose color="white" size={25} />
+            </button>
+          </div>
+          {renderOptions()}
         </div>
-        {renderOptions()}
       </div>
-    </div>
+      <Loading active={loading} />
+    </>
   ) : null;
 };
