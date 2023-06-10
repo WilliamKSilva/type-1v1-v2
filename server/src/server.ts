@@ -30,7 +30,11 @@ app.use(jsonParser);
 // Tentar implementar interfaces para os metodos do socket.io
 // ServerToClientEvents, ClientToServerEvents, etc
 const httpServer = createServer(app);
-const io = new Server(httpServer, {});
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+  },
+});
 
 httpServer.listen(3001);
 

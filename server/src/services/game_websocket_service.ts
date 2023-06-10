@@ -13,6 +13,7 @@ export class GameWebSocketService {
 
   public async textStateShare(): Promise<void> {
     this.io.on("connection", (socket) => {
+      console.log(socket.id);
       const query = socket.handshake.query;
 
       const gameUuid = query.gameUuid as string;
@@ -22,6 +23,7 @@ export class GameWebSocketService {
       socket.join(this.gameUuid);
 
       socket.on("player_state", (data: PlayerStateData) => {
+        console.log(data);
         this.gameState = data;
 
         socket.to(this.gameUuid).emit("player_opponent_state", this.gameState);
