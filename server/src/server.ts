@@ -23,7 +23,7 @@ const app = express();
 
 const jsonParser = bodyParser.json();
 
-app.use(cors());
+app.use(cors({allowedHeaders: '*', origin: '*'}));
 app.use(jsonParser);
 
 // Websocket

@@ -43,10 +43,10 @@ export class GameRepository implements IGameRepository {
     player_one_name,
     game_uuid,
   }: Partial<GameFast>): Promise<GameFast | null> {
-    const insertQuery = `INSERT INTO game_fast (uuid, player_one_name, game_id) VALUES ($1, $2, $3)`;
+    const insertQuery = `INSERT INTO games_fast (uuid, player_one_name, game_uuid) VALUES ($1, $2, $3)`;
     const data = [uuid, player_one_name, game_uuid];
     await this.dbClient.query(insertQuery, data);
-    const selectQuery = `SELECT * FROM game_fast WHERE uuid = $1`;
+    const selectQuery = `SELECT * FROM games_fast WHERE uuid = $1`;
 
     const createdGameFast = (
       await this.dbClient.query(selectQuery, [uuid])
@@ -69,10 +69,10 @@ export class GameRepository implements IGameRepository {
     player_one_uuid,
     game_uuid,
   }: Partial<GameRegular>): Promise<GameRegular | null> {
-    const insertQuery = `INSERT INTO game_regular (uuid, player_one_uuid, game_id) VALUES ($1, $2, $3)`;
+    const insertQuery = `INSERT INTO games_regular (uuid, player_one_uuid, game_uuid) VALUES ($1, $2, $3)`;
     const data = [uuid, player_one_uuid, game_uuid];
     await this.dbClient.query(insertQuery, data);
-    const selectQuery = `SELECT * FROM game_regular WHERE uuid = $1`;
+    const selectQuery = `SELECT * FROM games_regular WHERE uuid = $1`;
 
     const createdGameRegular = (
       await this.dbClient.query(selectQuery, [uuid])
@@ -94,7 +94,7 @@ export class GameRepository implements IGameRepository {
     player_two_name,
     game_uuid,
   }: Partial<GameFast>): Promise<GameFast | null> {
-    const insertQuery = `INSERT INTO game_fast (player_two_name) VALUES ($1) WHERE game_id = $2`;
+    const insertQuery = `INSERT INTO game_fast (player_two_name) VALUES ($1) WHERE game_uuid = $2`;
     const data = [player_two_name, game_uuid];
     await this.dbClient.query(insertQuery, data);
     const selectQuery = `SELECT * FROM game_fast WHERE uuid = $1`;
@@ -119,10 +119,10 @@ export class GameRepository implements IGameRepository {
     player_two_uuid,
     game_uuid,
   }: Partial<GameRegular>): Promise<GameRegular | null> {
-    const insertQuery = `INSERT INTO game_regular (player_two_uuid) VALUES ($1) WHERE game_id = $2`;
+    const insertQuery = `INSERT INTO game_regular (player_two_uuid) VALUES ($1) WHERE game_uuid = $2`;
     const data = [player_two_uuid, game_uuid];
     await this.dbClient.query(insertQuery, data);
-    const selectQuery = `SELECT * FROM game_regular WHERE game_id = $1`;
+    const selectQuery = `SELECT * FROM game_regular WHERE game_uuid = $1`;
 
     const updatedGameRegular = (
       await this.dbClient.query(selectQuery, [game_uuid])
