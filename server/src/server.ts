@@ -11,13 +11,6 @@ import {
 import { PoolClient } from "pg";
 import { Server } from "socket.io";
 
-// Pensar na logica de start do jogo
-// Um usuario se conecta primeiro, cria o jogo,
-// pega o uuid do jogo e envia pra um segundo usuario
-// os dois se conectam no mesmo jogo
-// o client 1 manda pro servidor o estado atual do texto digitado e
-// uuid do jogo, o servidor recebe e envia pro client 2
-
 // HTTP Server
 const app = express();
 
