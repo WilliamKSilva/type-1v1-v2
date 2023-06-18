@@ -137,7 +137,7 @@ export const GameModal = ({ active, setActive, gameType }: ModalProps) => {
         const createdGame = await response.json();
 
         setLoading(false);
-        navigate(`/game-room/${createdGame.uuid}`, {
+        navigate(`/game-room/${createdGame.data.uuid}`, {
           state: { playerName: gamePayload.player_one_name },
         });
       } catch (error) {

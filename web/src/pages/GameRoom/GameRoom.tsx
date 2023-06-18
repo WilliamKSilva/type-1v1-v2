@@ -1,6 +1,6 @@
 import { Socket, io } from "socket.io-client";
 import "./GameRoom.scss";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 type PlayerStateData = {
@@ -9,10 +9,11 @@ type PlayerStateData = {
 };
 
 export default function GameRoom() {
-  const { gameUuid, playerName } = useParams();
+  const { gameUuid } = useParams();
+  const { state } = useLocation();
 
   const [player, setPlayer] = useState<PlayerStateData>({
-    name: playerName,
+    name: state.playerName,
     textState: "",
   });
   const [playerOpponent, setPlayerOpponent] = useState<PlayerStateData>({
